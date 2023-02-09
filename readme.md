@@ -1,10 +1,9 @@
-Coucou
-
 from tkinter import * 
 
 def right(event):
     # Modification de la variable globale direction
-    global perso_x +=1
+    global perso_x
+    perso_x +=1
 
 def left(event):
     # Modification de la variable globale direction
@@ -13,21 +12,24 @@ def left(event):
     
 def down(event):
     # Modification de la variable globale direction
-    global perso_y -=1
+    global perso_y
+    perso_y +=1
     
 def up(event):
     # Modification de la variable globale direction
-    global perso_y +=1
+    global perso_y
+    perso_y -=1
 
 def moteur():
     global direction
     dessine_laby()
     dessine_perso()
-    tk.after(100, moteur)
+    fenetre.after(100, moteur)
 
 def dessine_perso():
     global perso_x
     global perso_y
+    print(perso_x, perso_y)
     cercle = canvas.create_oval(perso_x,perso_y,25,25,fill="blue", outline="#DDD", width=4)
 
 def dessine_laby():
@@ -60,7 +62,7 @@ murs_h = [ [0,1,1,0,1,0],
            [1,0,1,0,0,0],
            [0,0,0,1,0,1],
            [0,0,1,1,0,0],
-           [0,1,1,0,0,0]]
+           [0,1,1,0,0,0] ]
 
 murs_v =[ [0,1,1,0,0,1],
           [0,0,1,1,1,1],
@@ -71,14 +73,15 @@ murs_v =[ [0,1,1,0,0,1],
 
 
 pos_perso =[0, 0]
-b 
+perso_x = 100
+perso_y = 100
 dessine_laby()
 moteur()
 canvas.pack()
-tk.bind('<d>', right) 
-tk.bind('<q>', left) 
-tk.bind('<s>', down) 
-tk.bind('<z>', up)
+fenetre.bind('<d>', right) 
+fenetre.bind('<q>', left) 
+fenetre.bind('<s>', down) 
+fenetre.bind('<z>', up)
 
 fenetre.mainloop()
-                     
+                          
