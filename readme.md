@@ -2,23 +2,33 @@ from tkinter import *
 
 def right(event):
     # Modification de la variable globale direction
+    global perso_x2
     global perso_x
     perso_x +=1
+    perso_x2 +=1
+   
 
 def left(event):
     # Modification de la variable globale direction
+    global perso_x2
     global perso_x
     perso_x -=1
+    perso_x2 -=1
+
     
 def down(event):
     # Modification de la variable globale direction
+    global perso_y2
     global perso_y
     perso_y +=1
-    
+    perso_y2 +=1
+  
 def up(event):
     # Modification de la variable globale direction
+    global perso_y2
     global perso_y
     perso_y -=1
+    perso_y2 -=1
 
 def moteur():
     global direction
@@ -30,7 +40,7 @@ def dessine_perso():
     global perso_x
     global perso_y
     print(perso_x, perso_y)
-    cercle = canvas.create_oval(perso_x,perso_y,25,25,fill="blue", outline="#DDD", width=4)
+    cercle = canvas.create_oval(perso_x,perso_y,perso_x2,perso_y2,fill="red", outline="#FFF", width=4)
 
 def dessine_laby():
     OFFSET_X = 150
@@ -75,6 +85,8 @@ murs_v =[ [0,1,1,0,0,1],
 pos_perso =[0, 0]
 perso_x = 100
 perso_y = 100
+perso_x2 = 25
+perso_y2 = 25
 dessine_laby()
 moteur()
 canvas.pack()
@@ -83,5 +95,4 @@ fenetre.bind('<q>', left)
 fenetre.bind('<s>', down) 
 fenetre.bind('<z>', up)
 
-fenetre.mainloop()
-                          
+fenetre.mainloop()      
