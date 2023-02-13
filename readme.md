@@ -33,9 +33,18 @@ def up(event):
 def moteur():
     #Rafraichissement de la fenêtre
     global direction
+    canvas.delete('all')
     dessine_laby()
     dessine_perso()
+    #Création des bordures du labyrinthe
+    ligne1 = canvas.create_line(150, 125, 150, 400)
+    ligne2 = canvas.create_line(200, 125, 450, 125)
+    ligne3 = canvas.create_line(450, 425, 450, 175)
+    ligne4 = canvas.create_line(150, 425, 450, 425)
+    #Titre labyrinthe
+    txt = canvas.create_text(300, 20, text="Labyrinthe", font="Arial 24 italic", fill="black")
     fenetre.after(50, moteur)
+   
 
 def dessine_perso():
     #Dessine le personnage qu'on controlera (un carré en gros)
@@ -60,14 +69,14 @@ def dessine_laby():
     
 #Contenu de la fenêtre de jeu
 fenetre = Tk()
-
-canvas = Canvas(fenetre, width=600, height=480, background='white')
-
-#Création des bordures du labyrinthe
-ligne1 = canvas.create_line(150, 125, 150, 400)
-ligne2 = canvas.create_line(200, 125, 450, 125)
-ligne3 = canvas.create_line(450, 425, 450, 175)
-ligne4 = canvas.create_line(150, 425, 450, 425)
+if game_over :
+    TEXTE = 'GAME OVER'
+    normal_font=tkfont.Font(family='Helvetica',size=12,weight='bold')
+    canvas.create_text(100,200,text=TEXTE,fill='red',font=normal_font)
+game_over = False
+canvas = Canvas(fenetre, width=1200, height=1200, background='white')
+if perso[0][0]<=-1 or perso[0][1]<= -1 or perso[0][0]>=1200 or perso[0][1]>= 1200 :
+    game_over=True
 
 #Titre labyrinthe
 txt = canvas.create_text(300, 20, text="Labyrinthe", font="Arial 24 italic", fill="black")
