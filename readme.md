@@ -2,33 +2,26 @@ from tkinter import *
 
 def right(event):
     # Se déplacer vers la droite
-    global perso_x2
     global perso_x
     perso_x +=25
-    perso_x2 +=25
-   
-
+    
+    
 def left(event):
     # Se déplacer vers la gauche
-    global perso_x2
     global perso_x
     perso_x -=25
-    perso_x2 -=25
-
+     
     
 def down(event):
     # Se déplacer vers le bas
-    global perso_y2
     global perso_y
+    if i 
     perso_y +=25
-    perso_y2 +=25
-  
+
 def up(event):
     # Se déplacer vers le haut
-    global perso_y2
     global perso_y
     perso_y -=25
-    perso_y2 -=25
 
 def moteur():
     #Rafraichissement de la fenêtre
@@ -50,8 +43,10 @@ def dessine_perso():
     #Dessine le personnage qu'on controlera (un carré en gros)
     global perso_x
     global perso_y
-    print(perso_x, perso_y)
-    perso = canvas.create_rectangle(perso_x,perso_y,perso_x2,perso_y2,fill="black")
+    i = round(perso_x/50 - 18/5)
+    j = round(perso_y/50 - 13/5)
+    print(perso_x, perso_y, i, j)
+    perso = canvas.create_rectangle(perso_x,perso_y,perso_x-10,perso_y-10,fill="black")
 
 def dessine_laby():
     #Dessine un labyrinthe grâce à la liste de liste
@@ -69,14 +64,7 @@ def dessine_laby():
     
 #Contenu de la fenêtre de jeu
 fenetre = Tk()
-if game_over :
-    TEXTE = 'GAME OVER'
-    normal_font=tkfont.Font(family='Helvetica',size=12,weight='bold')
-    canvas.create_text(100,200,text=TEXTE,fill='red',font=normal_font)
-game_over = False
 canvas = Canvas(fenetre, width=1200, height=1200, background='white')
-if perso[0][0]<=-1 or perso[0][1]<= -1 or perso[0][0]>=1200 or perso[0][1]>= 1200 :
-    game_over=True
 
 #Titre labyrinthe
 txt = canvas.create_text(300, 20, text="Labyrinthe", font="Arial 24 italic", fill="black")
@@ -100,8 +88,7 @@ murs_v =[ [0,1,1,0,0,1],
 pos_perso =[0, 0]
 perso_x = 30
 perso_y = 30
-perso_x2 = 20
-perso_y2 = 20
+
 
 
 dessine_laby()
@@ -115,4 +102,6 @@ fenetre.bind('<q>', left)
 fenetre.bind('<s>', down) 
 fenetre.bind('<z>', up)
 
-fenetre.mainloop()      
+fenetre.mainloop()
+
+
