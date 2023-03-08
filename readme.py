@@ -69,8 +69,8 @@ def dessine_laby():
             if murs_v[y][x] == 1:
                 canvas.create_line(x*ECH+OFFSET_X, y*ECH+OFFSET_Y, x*ECH+OFFSET_X, y*ECH+OFFSET_Y+ECH)
     
-""" Contenu de la fenêtre de jeu
-"""
+# Contenu de la fenêtre de jeu
+
 fenetre = Tk()
 canvas = Canvas(fenetre, width=1200, height=1200, background='white')
 
@@ -92,8 +92,7 @@ murs_v =[ [0,1,1,0,0,1],
           [0,1,0,0,1,1],
           [1,0,0,1,1,0] ]
 
-""" Taille, position du personnage
-"""
+# Taille, position du personnage
 perso_x = 30
 perso_y = 30
 
@@ -104,8 +103,7 @@ moteur()
 canvas.pack()
 
 
-""" Configuration des touches de déplacements
-"""
+# Configuration des touches de déplacements
 fenetre.bind('<d>', right) 
 fenetre.bind('<q>', left) 
 fenetre.bind('<s>', down) 
