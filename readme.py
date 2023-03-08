@@ -1,30 +1,35 @@
 from tkinter import * 
 
 def right(event):
-    # Se déplacer vers la droite
+    """ Se déplacer vers la droite
+    """
     global perso_x
     perso_x +=25
     
     
 def left(event):
-    # Se déplacer vers la gauche
+    """ Se déplacer vers la gauche
+    """
     global perso_x
     perso_x -=25
      
     
 def down(event):
-    # Se déplacer vers le bas
+    """ Se déplacer vers le bas
+    """
     global perso_y
     if i 
     perso_y +=25
 
 def up(event):
-    # Se déplacer vers le haut
+    """ Se déplacer vers le haut
+    """
     global perso_y
     perso_y -=25
 
 def moteur():
-    #Rafraichissement de la fenêtre
+    """ Rafraichissement de la fenêtre
+    """
     global direction
     canvas.delete('all')
     dessine_laby()
@@ -40,7 +45,8 @@ def moteur():
    
 
 def dessine_perso():
-    #Dessine le personnage qu'on controlera (un carré en gros)
+    """ Dessine le personnage qu'on controlera (un carré en gros)
+    """
     global perso_x
     global perso_y
     i = round(perso_x/50 - 18/5)
@@ -49,7 +55,8 @@ def dessine_perso():
     perso = canvas.create_rectangle(perso_x,perso_y,perso_x-10,perso_y-10,fill="black")
 
 def dessine_laby():
-    #Dessine un labyrinthe grâce à la liste de liste
+    """ Dessine un labyrinthe grâce à la liste de liste
+    """
     OFFSET_X = 150
     OFFSET_Y = 125
     ECH = 50
@@ -62,7 +69,8 @@ def dessine_laby():
             if murs_v[y][x] == 1:
                 canvas.create_line(x*ECH+OFFSET_X, y*ECH+OFFSET_Y, x*ECH+OFFSET_X, y*ECH+OFFSET_Y+ECH)
     
-#Contenu de la fenêtre de jeu
+""" Contenu de la fenêtre de jeu
+"""
 fenetre = Tk()
 canvas = Canvas(fenetre, width=1200, height=1200, background='white')
 
@@ -84,8 +92,8 @@ murs_v =[ [0,1,1,0,0,1],
           [0,1,0,0,1,1],
           [1,0,0,1,1,0] ]
 
-#Taille, position du personnage
-pos_perso =[0, 0]
+""" Taille, position du personnage
+"""
 perso_x = 30
 perso_y = 30
 
@@ -96,7 +104,8 @@ moteur()
 canvas.pack()
 
 
-#Configuration des touches de déplacements
+""" Configuration des touches de déplacements
+"""
 fenetre.bind('<d>', right) 
 fenetre.bind('<q>', left) 
 fenetre.bind('<s>', down) 
