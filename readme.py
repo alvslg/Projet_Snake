@@ -112,3 +112,127 @@ fenetre.bind('<z>', up)
 fenetre.mainloop()
 
 
+
+
+
+
+
+
+# -*- coding: utf-8 -*-
+"""
+Programme Snake
+
+"""
+from tkinter import * # Importation de la bibliothèque  Tkinter 
+from tkinter import font as tkfont
+from random import *
+
+def computeNextFrame(numFrame, coordonnee):
+    #Affiche le numéro de la frame
+    numFrame = numFrame + 1
+    
+    #Efface le canevas
+    can.delete('all')
+    #Propagation du déplacements des noeuds
+    for n in range(len(coordonnee)-1, 0, -1):
+        coordonnee[n][0] = coordonnee[n-1][0]
+        coordonnee[n][1] = coordonnee[n-1][1]
+    
+    #Mise à jour des coordonnées
+    if direction == 'right' :
+        coordonnee[0][0] += 20
+    if direction == 'left' :
+        coordonnee[0][0] -= 20
+    if direction == 'up' :
+        coordonnee[0][1] -= 20
+    if direction == 'down' :
+        coordonnee[0][1] += 20
+    
+    #Dessin de la tête du serpent et de noeuds
+    can.create_rectangle(coordonnee[0][0], coordonnee[0][1], coordonnee[0][0] + 20, coordonnee[0][1] + 20,
+                         outline='red', fill='red')
+    
+    for n in range(1,len(coordonnee)):
+        can.create_rectangle(coordonnee[n][0], coordonnee[n][1], coordonnee[n][0] + 20,
+                             coordonnee[n][1] + 20, outline='white', fill='blue')
+    objet = []
+    
+    #Premier objet (la pomme)
+    x = randint(1,24)
+    y = randint(1,24)
+    objet.append([x*20, y*20, 0])
+    
+    for p in range(len(objet)):
+        if coordonnee[0][0] == objet[0][0] and coordonnee[p][1] == objet[p][1]:
+            #Déplacement de la pomme
+            objet[0][0] = randint(1,24)* 20
+            objet[0][1] = randint(1,24)* 20
+            #Ajout d'un noeud au serpent (à la même place que le dernier noeud)
+            coordonnee.append([-20,-20]) #Caché pour l'instant
+    
+    game_over = False
+    #On teste la position de la tête par raport aux noeuds du serpent
+    for n in range(1,len(coordonnee)):
+        if coordonnee[0][0] == coordonnee[n][0] and coordonnee[p][1] == coordonnee[n][1]:
+            game_over = True #La partie est finie
+    if game_over:
+        #fin de partie
+        TEXTE = "GAME OVER"
+        normal_font = tkfont.Font(family="Helvetica", size=12, weight="bold")
+        can.create_text(100,200,text = TEXTE, fill='red', font=normal)
+    else:
+        #La partie n'est pas finie
+        #Calcule une nouvelle frame dans 100 ms
+        tk.after(100, lambda:computeNextFrame(numFrame,coordonnee,objet))
+    
+    #Calcule une nouvelle frame dans 100ms
+    tk.after(100, lambda:computeNextFrame(numFrame,coordonnee))
+    
+def right(event):
+    #Modification de la variable globale direction
+    global direction
+    direction = 'right'
+    print(direction)
+    
+def down(event):
+    #Modification de la variable globale direction
+    global direction
+    direction = 'down'
+    print(direction)
+def up(event):
+    #Modification de la variable globale direction
+    global direction
+    direction = 'up'
+    print(direction)
+def left(event):
+    #Modification de la variable globale direction
+    global direction
+    direction = 'left'
+    print(direction)
+# On affiche le canevas
+
+# On crée un environnement Tkinter
+tk = Tk()
+   
+# On crée un canevas dans l'environnement Tkinter d'une taille de 500x500
+# Ce constructeur prend comme premier paramètre l'objet dans lequel il sera
+# intégré (ici l'environnement Tkinter)
+# Les trois autres paramètres permettent de spécifier la taille et la couleur
+# de fond du canevas
+if __name__ == "__main__" :
+    can = Canvas(tk, width=500, height=500, bg='black')
+    can.pack()
+    can.create_oval(100, 200, 120, 120, outline='red', fill='blue')
+    #Direction par défaut
+    direction = 'up'
+    coordonnee = [[200, 200], [200, 220], [200, 240], [200,260]]
+    computeNextFrame(0,coordonnee)
+    #Appuyer sur la touche 'd' appelera la fonction right()
+    tk.bind('d', right)
+    tk.bind('s', down)
+    tk.bind('z', up)
+    tk.bind('q', left)
+    
+    # lancement de la boucle principale qui écoute les évènements (claviers...)
+    tk.mainloop() # Cet appel doit être la derniere instruction du programme
+
