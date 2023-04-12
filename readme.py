@@ -1,123 +1,3 @@
-from tkinter import * 
-
-def right(event):
-    """ Se déplacer vers la droite
-    """
-    global perso_x
-    perso_x +=25
-    
-    
-def left(event):
-    """ Se déplacer vers la gauche
-    """
-    global perso_x
-    perso_x -=25
-     
-    
-def down(event):
-    """ Se déplacer vers le bas
-    """
-    global perso_y
-    if i 
-    perso_y +=25
-
-def up(event):
-    """ Se déplacer vers le haut
-    """
-    global perso_y
-    perso_y -=25
-
-def moteur():
-    """ Rafraichissement de la fenêtre
-    """
-    global direction
-    canvas.delete('all')
-    dessine_laby()
-    dessine_perso()
-    #Création des bordures du labyrinthe
-    ligne1 = canvas.create_line(150, 125, 150, 400)
-    ligne2 = canvas.create_line(200, 125, 450, 125)
-    ligne3 = canvas.create_line(450, 425, 450, 175)
-    ligne4 = canvas.create_line(150, 425, 450, 425)
-    #Titre labyrinthe
-    txt = canvas.create_text(300, 20, text="Labyrinthe", font="Arial 24 italic", fill="black")
-    fenetre.after(50, moteur)
-   
-
-def dessine_perso():
-    """ Dessine le personnage qu'on controlera (un carré en gros)
-    """
-    global perso_x
-    global perso_y
-    i = round(perso_x/50 - 18/5)
-    j = round(perso_y/50 - 13/5)
-    print(perso_x, perso_y, i, j)
-    perso = canvas.create_rectangle(perso_x,perso_y,perso_x-10,perso_y-10,fill="black")
-
-def dessine_laby():
-    """ Dessine un labyrinthe grâce à la liste de liste
-    """
-    OFFSET_X = 150
-    OFFSET_Y = 125
-    ECH = 50
-    for y in range(len(murs_h)):
-        for x in range(len(murs_v[y])):
-            if murs_h[y][x] == 1:
-                canvas.create_line(x*ECH+OFFSET_X, y*ECH+OFFSET_Y, x*ECH+ECH+OFFSET_X, y*ECH+OFFSET_Y)                      
-    for y in range(len(murs_v)):
-        for x in range(len(murs_h[x])):
-            if murs_v[y][x] == 1:
-                canvas.create_line(x*ECH+OFFSET_X, y*ECH+OFFSET_Y, x*ECH+OFFSET_X, y*ECH+OFFSET_Y+ECH)
-    
-# Contenu de la fenêtre de jeu
-
-fenetre = Tk()
-canvas = Canvas(fenetre, width=1200, height=1200, background='white')
-
-#Titre labyrinthe
-txt = canvas.create_text(300, 20, text="Labyrinthe", font="Arial 24 italic", fill="black")
-
-#Structure du labyrinthe
-murs_h = [ [0,1,1,0,1,0],
-           [0,0,0,0,0,0],
-           [1,0,1,0,0,0],
-           [0,0,0,1,0,1],
-           [0,0,1,1,0,0],
-           [0,1,1,0,0,0] ]
-
-murs_v =[ [0,1,1,0,0,1],
-          [0,0,1,1,1,1],
-          [0,0,1,0,1,0],
-          [0,1,0,1,0,1],
-          [0,1,0,0,1,1],
-          [1,0,0,1,1,0] ]
-
-# Taille, position du personnage
-perso_x = 30
-perso_y = 30
-
-
-
-dessine_laby()
-moteur()
-canvas.pack()
-
-
-# Configuration des touches de déplacements
-fenetre.bind('<d>', right) 
-fenetre.bind('<q>', left) 
-fenetre.bind('<s>', down) 
-fenetre.bind('<z>', up)
-
-fenetre.mainloop()
-
-
-
-
-
-
-
-
 # -*- coding: utf-8 -*-
 """
 Programme Snake
@@ -125,114 +5,152 @@ Programme Snake
 """
 from tkinter import * # Importation de la bibliothèque  Tkinter 
 from tkinter import font as tkfont
-from random import *
+from random import randint
 
-def computeNextFrame(numFrame, coordonnee):
-    #Affiche le numéro de la frame
-    numFrame = numFrame + 1
-    
-    #Efface le canevas
-    can.delete('all')
-    #Propagation du déplacements des noeuds
-    for n in range(len(coordonnee)-1, 0, -1):
-        coordonnee[n][0] = coordonnee[n-1][0]
-        coordonnee[n][1] = coordonnee[n-1][1]
-    
-    #Mise à jour des coordonnées
-    if direction == 'right' :
-        coordonnee[0][0] += 20
-    if direction == 'left' :
-        coordonnee[0][0] -= 20
-    if direction == 'up' :
-        coordonnee[0][1] -= 20
-    if direction == 'down' :
-        coordonnee[0][1] += 20
-    
-    #Dessin de la tête du serpent et de noeuds
-    can.create_rectangle(coordonnee[0][0], coordonnee[0][1], coordonnee[0][0] + 20, coordonnee[0][1] + 20,
-                         outline='red', fill='red')
-    
-    for n in range(1,len(coordonnee)):
-        can.create_rectangle(coordonnee[n][0], coordonnee[n][1], coordonnee[n][0] + 20,
-                             coordonnee[n][1] + 20, outline='white', fill='blue')
-    objet = []
-    
-    #Premier objet (la pomme)
-    x = randint(1,24)
-    y = randint(1,24)
-    objet.append([x*20, y*20, 0])
-    
-    for p in range(len(objet)):
-        if coordonnee[0][0] == objet[0][0] and coordonnee[p][1] == objet[p][1]:
-            #Déplacement de la pomme
-            objet[0][0] = randint(1,24)* 20
-            objet[0][1] = randint(1,24)* 20
-            #Ajout d'un noeud au serpent (à la même place que le dernier noeud)
-            coordonnee.append([-20,-20]) #Caché pour l'instant
-    
-    game_over = False
-    #On teste la position de la tête par raport aux noeuds du serpent
-    for n in range(1,len(coordonnee)):
-        if coordonnee[0][0] == coordonnee[n][0] and coordonnee[p][1] == coordonnee[n][1]:
-            game_over = True #La partie est finie
-    if game_over:
-        #fin de partie
-        TEXTE = "GAME OVER"
-        normal_font = tkfont.Font(family="Helvetica", size=12, weight="bold")
-        can.create_text(100,200,text = TEXTE, fill='red', font=normal)
-    else:
-        #La partie n'est pas finie
-        #Calcule une nouvelle frame dans 100 ms
-        tk.after(100, lambda:computeNextFrame(numFrame,coordonnee,objet))
-    
-    #Calcule une nouvelle frame dans 100ms
-    tk.after(100, lambda:computeNextFrame(numFrame,coordonnee))
-    
+# Modification de la variable globale direction
+
 def right(event):
-    #Modification de la variable globale direction
+    """ Dirige le serpent vers la droite
+    """
     global direction
-    direction = 'right'
-    print(direction)
+    if not direction == 'left':
+        direction = 'right'
+    
+def left(event):
+    """ Dirige le serpent vers la gauche
+    """
+    global direction
+    if not direction == 'right':
+        direction = 'left'
     
 def down(event):
-    #Modification de la variable globale direction
+    """ Dirige le serpent vers le bas
+    """
     global direction
-    direction = 'down'
-    print(direction)
+    if not direction == 'up':
+        direction = 'down'
+    
 def up(event):
-    #Modification de la variable globale direction
+    """ Dirige le serpent vers le haut
+    """
     global direction
-    direction = 'up'
-    print(direction)
-def left(event):
-    #Modification de la variable globale direction
-    global direction
-    direction = 'left'
-    print(direction)
-# On affiche le canevas
+    if not direction == 'down':
+        direction = 'up'
 
-# On crée un environnement Tkinter
-tk = Tk()
-   
-# On crée un canevas dans l'environnement Tkinter d'une taille de 500x500
-# Ce constructeur prend comme premier paramètre l'objet dans lequel il sera
-# intégré (ici l'environnement Tkinter)
-# Les trois autres paramètres permettent de spécifier la taille et la couleur
-# de fond du canevas
-if __name__ == "__main__" :
-    can = Canvas(tk, width=500, height=500, bg='black')
+        
+# Calcule la nouvelle frame de jeu
+def computeNextFrame(numFrame,coordonnee, objet,level):
+    global direction
+
+    # Effacer le canevas
+    can.delete('all')
+    
+    # Propagation du déplacement des noeuds
+    for n in range (len(coordonnee)-1,0,-1):
+        coordonnee[n][0] = coordonnee[n-1][0]
+        coordonnee[n][1] = coordonnee[n-1][1]
+        
+    # Mise à jour des coordonnées
+    #Vérifie si la tête du serpent touche les bord de la fenêtre
+    if direction == 'right':
+        coordonnee[0][0] += 20
+        if coordonnee[0][0] > 500:
+            game_over = True
+    if direction == 'left':
+        coordonnee[0][0] -= 20
+        if coordonnee[0][0] < 0:
+            game_over = True
+    if direction == 'up':
+        coordonnee[0][1] -= 20
+        if coordonnee[0][1] < 0:
+            game_over = True
+    if direction == 'down':
+        coordonnee[0][1] += 20
+        if coordonnee[0][1] > 500:
+            game_over = True
+
+    # Dessin de la tête du serpent et de noeuds
+    can.create_rectangle(coordonnee[0][0], coordonnee[0][1], coordonnee[0][0] + 20, 
+                         coordonnee[0][1] + 20, outline='orange', fill='orange')
+    #Alterne de couleur entre chaque noeuds de serpents
+    for n in range(1,len(coordonnee)):
+        if n%2 == 0: 
+            ligne = 'yellowgreen'
+            couleur = 'yellowgreen'
+        else:
+            ligne = 'green'
+            couleur = 'green'
+        can.create_rectangle(coordonnee[n][0], coordonnee[n][1], coordonnee[n][0] + 20, 
+                         coordonnee[n][1] + 20, outline= ligne, fill= couleur)    
+    # Dessine les objets
+    print(objet)
+    for p in range(len(objet)):
+        can.create_oval(objet[p][0], objet[p][1], objet[p][0] + 20, 
+                         objet[p][1] + 20, outline= 'red', fill= 'red')   
+    print(coordonnee[0])   
+    for p in range(len(objet)):
+        if coordonnee[0][0] == objet [p][0] and coordonnee[0][1] == objet [p][1]:
+            objet[p][0] = randint(1,24)* 20
+            objet[p][1] = randint(1,24)* 20
+            # Ajout d'un noeud au serpent (à la même place que le dernier noeud)
+            coordonnee.append([-20, -20]) # Caché pour l'instant
+            level+=1
+    game_over = False     
+    # On test la position de la tête par rapport aux noeuds du serpent
+    for n in range(1,len(coordonnee)):
+        #Si la tête se situe dans les même coordonnées que un de ses noeuds ou inversement, Game over
+        if coordonnee[0][0] == coordonnee [n][0] and coordonnee[p][1] == coordonnee [n][1]:
+            game_over = True # La partie est finie
+            
+        if coordonnee[0][0] >= 500 or coordonnee[0][0] < 0 or coordonnee[0][1] >= 500 or coordonnee[0][1] < 0:
+            game_over = True
+    
+    if game_over : 
+        # Fin de partie, affichage du message 
+        TEXTE = "T'es nul"
+        normal_font = tkfont.Font(family="Helvetica", size=50, weight="bold")
+        can.create_text(250,200,text = TEXTE, fill='black',  font=normal_font)
+    else:
+        # La partie n'est pas finie donc affiche une nouvelle frame
+        tk.after(75, lambda:computeNextFrame(numFrame,coordonnee, objet,level))
+
+    
+    if not game_over:
+        texte_compteur = level
+        normal_font = tkfont.Font(family="Helvetica", size=45, weight="bold")
+        can.create_text(480,40,text = level, fill='black',  font=normal_font)
+        
+        
+if __name__ == "__main__":
+    # On crée un environnement Tkinter
+    tk = Tk()
+    # On crée un canevas dans l'environnement Tkinter d'une taille de 500x500
+    can = Canvas(tk, width=500, height=500, bg='sienna')
+
+    # Ce constructeur prend comme premier paramètre l'objet dans lequel il sera
+    # intégré (ici l'environnement Tkinter)
+    # Les trois autres paramètres permettent de spécifier la taille et la couleur
+    # de fond du canevas
+    # On affiche le canevas
     can.pack()
-    can.create_oval(100, 200, 120, 120, outline='red', fill='blue')
-    #Direction par défaut
-    direction = 'up'
+    
+    # Direction par défaut
+    direction = 'down' 
+    
     coordonnee = [[200, 200], [200, 220], [200, 240], [200,260]]
-    computeNextFrame(0,coordonnee)
-    #Appuyer sur la touche 'd' appelera la fonction right()
-    tk.bind('d', right)
-    tk.bind('s', down)
-    tk.bind('z', up)
-    tk.bind('q', left)
+    objet = []
+    
+    # Premier objet (la pomme)
+    x = randint(1,24)
+    y = randint(1,24)
+    objet.append([x*20, y*20])
+    # Construction de la première étape de simulation
+    computeNextFrame(0,coordonnee, objet,4)
+    
+    tk.bind('<d>', right) #Droite 
+    tk.bind('<q>', left) #Gauche
+    tk.bind('<s>', down) #Bas
+    tk.bind('<z>', up) #Haut
     
     # lancement de la boucle principale qui écoute les évènements (claviers...)
     tk.mainloop() # Cet appel doit être la derniere instruction du programme
-
