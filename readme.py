@@ -135,7 +135,7 @@ if __name__ == "__main__":
     can.pack()
     
     # Direction par défaut
-    direction = 'down' 
+    direction = 'up' 
     
     coordonnee = [[200, 200], [200, 220], [200, 240], [200,260]]
     objet = []
@@ -153,4 +153,4 @@ if __name__ == "__main__":
     tk.bind('<z>', up) #Haut
     
     # lancement de la boucle principale qui écoute les évènements (claviers...)
-    tk.mainloop() # Cet appel doit être la derniere instruction du programme
+    tk.mainloop() # Cet appel doit être la derni�ere instruction du programme
